@@ -5,30 +5,46 @@ CREATE DATABASE products;
 USE products;
 
 CREATE TABLE products (
-  product_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(1000)
-  s
+  id SERIAL PRIMARY KEY,
+  name Text,
+  slogan Text,
+  description Text,
+  category Text,
+  default_price INTEGER
 );
 
-CREATE TABLE messages (
-  message_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  content VARCHAR(1000),
-  -- room_id INTEGER(11),
-  room_name VARCHAR(1000),
-  user_id INTEGER(11)
-  -- FOREIGN KEY (room_id) REFERENCES rooms(room_id),
-  -- FOREIGN KEY (user_id) REFERENCES users(user_id)
+CREATE TABLE features (
+  id SERIAL PRIMARY KEY,
+  product_id INTEGER REFERENCES products(id),
+  feature TEXT,
+  value TEXT
 );
 
--- CREATE TABLE friends (
---   user_id INTEGER NOT NULL,
---   friend_id INTEGER NOT NULL,
---   FOREIGN KEY (user_id) REFERENCES users(user_id),
---   FOREIGN KEY (friend_id) REFERENCES users(user_id)
--- );
+CREATE TABLE styles (
+  id SERIAL PRIMARY KEY,
+  productId INTEGER REFERENCES products(id),
+  name TEXT,
+  sale_price INTEGER,
+  original_price INTEGER,
+  default_style BOOLEAN
+);
 
+CREATE TABLE photos (
+  id SERIAL PRIMARY KEY,
+  styleId INTEGER REFERENCES styles(id),
+  url TEXT,
+  thumbnail_url TEXT
+);
 
-/*  Execute this file from the command line by typing:
- *    mysql -u root < server/schema.sql
- *  to create the database and the tables.*/
+CREATE TABLE skus (
+  id SERIAL PRIMARY KEY,
+  styleId INTEGER REFERENCES styles(id),
+  size TEXT,
+  quantity INTEGER
+);
 
+CREATE TABLE related (
+  id SERIAL PRIMARY KEY,
+  current_product_id INTEGER REFERENCES products(id),
+  related_product_id INTEGER
+);
