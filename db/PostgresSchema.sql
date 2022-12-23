@@ -13,12 +13,22 @@ CREATE TABLE products (
   default_price INTEGER
 );
 
+COPY products
+FROM '../data/product.csv'
+DELIMITER ','
+CSV HEADER;
+
 CREATE TABLE features (
   id SERIAL PRIMARY KEY,
   product_id INTEGER REFERENCES products(id),
   feature TEXT,
   value TEXT
 );
+
+COPY features
+FROM '../data/features.csv'
+DELIMITER ','
+CSV HEADER;
 
 CREATE TABLE styles (
   id SERIAL PRIMARY KEY,
@@ -29,12 +39,22 @@ CREATE TABLE styles (
   default_style BOOLEAN
 );
 
+COPY styles
+FROM '../data/styles.csv'
+DELIMITER ','
+CSV HEADER;
+
 CREATE TABLE photos (
   id SERIAL PRIMARY KEY,
   styleId INTEGER REFERENCES styles(id),
   url TEXT,
   thumbnail_url TEXT
 );
+
+COPY photos
+FROM '../data/photos.csv'
+DELIMITER ','
+CSV HEADER;
 
 CREATE TABLE skus (
   id SERIAL PRIMARY KEY,
@@ -43,8 +63,18 @@ CREATE TABLE skus (
   quantity INTEGER
 );
 
+COPY skus
+FROM '../data/skus.csv'
+DELIMITER ','
+CSV HEADER;
+
 CREATE TABLE related (
   id SERIAL PRIMARY KEY,
   current_product_id INTEGER REFERENCES products(id),
   related_product_id INTEGER
 );
+
+COPY related
+FROM '../data/related.csv'
+DELIMITER ','
+CSV HEADER;
