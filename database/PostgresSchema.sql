@@ -4,7 +4,9 @@ CREATE DATABASE products;
 
 USE products;
 
-CREATE TABLE products (
+-- \c products
+
+CREATE TABLE IF NOT EXISTS products (
   id SERIAL PRIMARY KEY,
   name Text,
   slogan Text,
@@ -14,11 +16,11 @@ CREATE TABLE products (
 );
 
 COPY products
-FROM '../data/product.csv'
+FROM '/Users/max/HackReactor/SEI/week8/products-api/data/product.csv'
 DELIMITER ','
 CSV HEADER;
 
-CREATE TABLE features (
+CREATE TABLE IF NOT EXISTS features (
   id SERIAL PRIMARY KEY,
   product_id INTEGER REFERENCES products(id),
   feature TEXT,
@@ -26,25 +28,25 @@ CREATE TABLE features (
 );
 
 COPY features
-FROM '../data/features.csv'
+FROM '/Users/max/HackReactor/SEI/week8/products-api/data/features.csv'
 DELIMITER ','
 CSV HEADER;
 
-CREATE TABLE styles (
+CREATE TABLE IF NOT EXISTS styles (
   id SERIAL PRIMARY KEY,
   productId INTEGER REFERENCES products(id),
   name TEXT,
-  sale_price INTEGER,
-  original_price INTEGER,
+  sale_price TEXT,
+  original_price TEXT,
   default_style BOOLEAN
 );
 
 COPY styles
-FROM '../data/styles.csv'
+FROM '/Users/max/HackReactor/SEI/week8/products-api/data/styles.csv'
 DELIMITER ','
 CSV HEADER;
 
-CREATE TABLE photos (
+CREATE TABLE IF NOT EXISTS photos (
   id SERIAL PRIMARY KEY,
   styleId INTEGER REFERENCES styles(id),
   url TEXT,
@@ -52,11 +54,11 @@ CREATE TABLE photos (
 );
 
 COPY photos
-FROM '../data/photos.csv'
+FROM '/Users/max/HackReactor/SEI/week8/products-api/data/photos.csv'
 DELIMITER ','
 CSV HEADER;
 
-CREATE TABLE skus (
+CREATE TABLE IF NOT EXISTS skus (
   id SERIAL PRIMARY KEY,
   styleId INTEGER REFERENCES styles(id),
   size TEXT,
@@ -64,17 +66,17 @@ CREATE TABLE skus (
 );
 
 COPY skus
-FROM '../data/skus.csv'
+FROM '/Users/max/HackReactor/SEI/week8/products-api/data/skus.csv'
 DELIMITER ','
 CSV HEADER;
 
-CREATE TABLE related (
+CREATE TABLE IF NOT EXISTS related (
   id SERIAL PRIMARY KEY,
   current_product_id INTEGER REFERENCES products(id),
   related_product_id INTEGER
 );
 
 COPY related
-FROM '../data/related.csv'
+FROM '/Users/max/HackReactor/SEI/week8/products-api/data/related.csv'
 DELIMITER ','
 CSV HEADER;
