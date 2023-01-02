@@ -1,8 +1,14 @@
 {
   "dependencies": {
-    "express": "^4.18.2"
+    "axios": "^1.2.2",
+    "express": "^4.18.2",
+    "linereader": "^1.1.0",
+    "pg": "^8.8.0",
+    "pool": "^0.4.1"
   },
   "devDependencies": {
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.20"
   }
 }
