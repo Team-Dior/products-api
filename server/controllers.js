@@ -9,7 +9,6 @@ module.exports = {
       .catch((error) => res.status(500).send(error))
   },
   getProduct: (req, res) => {
-    console.log(req.params.product_id);
     models.queryProduct(req.params.product_id)
       .then((result) => res.status(200).send(result))
       .catch((error) => res.status(500).send(error))
