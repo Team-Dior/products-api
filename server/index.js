@@ -1,14 +1,17 @@
-const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, './env') });
+require('dotenv').config();
 const express = require('express');
+const path = require('path');
+
 const morgan = require('morgan');
+const cors = require('cors');
 
 const app = express();
-
 const router = require('./router');
 
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.use(router);
 

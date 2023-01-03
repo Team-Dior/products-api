@@ -1,6 +1,11 @@
 {
+  "scripts": {
+    "server-dev": "npx nodemon server",
+    "start": "node server/index.js"
+  },
   "dependencies": {
     "axios": "^1.2.2",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "linereader": "^1.1.0",
     "pg": "^8.8.0",
