@@ -1,8 +1,6 @@
 const db = require('../database/db.js')
 
-const getPhotos = async (styleid) => {
 
-}
 
 module.exports = {
   queryProducts: (page, count) => {
@@ -33,35 +31,35 @@ module.exports = {
     return db.query(`SELECT id AS style_id, name, original_price, sale_price, default_style FROM styles WHERE productID = ${product_id}`)
       .then((result) => {
         data.results = result.rows;
-        console.log(data);
-        let photos = [];
-        let skus = [];
 
-        for (let index = 0; index < data.results.length; index++) {
-          console.log('hey');
-          console.log(`SELECT url, thumbnail_url from photos WHERE styleid = ${data.results[index].style_id}`)
-          return db.query(`SELECT url, thumbnail_url from photos WHERE styleid = ${data.results[index].style_id}`)
+        return Promise.all(
+          data.results.map(async (style) => {
+            await db.query(`SELECT url, thumbnail_url from photos WHERE styleid = ${style.style_id}`)
             .then((result) => {
-              console.log('not error');
-              console.log(result.rows);
-              photos.push(result.rows);
-            })
-            .catch((error) => {
-              console.log('error');
-              console.log(error);
-            })
-          return db.query(`SELECT id, size, quantity FROM sku WHERE styleiid = ${data.results[i].style_id}`)
-            .then((result) => {
-              skus.push(result.rows);
+              style.photos = result.rows;
             })
             .catch((error) => {
               console.log(error);
             })
-        }
-        console.log(photos);
-        console.log(skus);
-        setTimeout(10000);
-        return data;
+          })
+        ).then(() => {
+          return Promise.all(
+            data.results.map(async (style) => {
+              await db.query(`SELECT id, size, quantity FROM skus WHERE styleid = ${style.style_id}`)
+              .then((result) => {
+                style.skus = result.rows.length
+                ? result.rows.reduce((acc, sku) => {
+                  acc[sku.id] = { quantity: sku.quantity, size: sku.size };
+                  return acc;
+                }, {})
+                : { null: { quantity: null, size: null } }
+              })
+            })
+          )
+          .then(() => {
+            return data;
+          })
+        })
       })
       .catch((error) => {
         return error;
