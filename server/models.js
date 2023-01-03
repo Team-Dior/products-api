@@ -1,4 +1,4 @@
-const db = require('../db')
+const db = require('../database/db.js')
 
 module.exports = {
   queryProducts: (page, count) => {
@@ -11,7 +11,13 @@ module.exports = {
       })
   },
   queryProduct: (product_id) => {
-
+    return db.query(`SELECT * FROM products WHERE id=${product_id}`)
+      .then((result) => {
+        return result.rows;
+      })
+      .catch((error) => {
+        return error;
+      })
   },
   queryStyles: (product_id) => {
 
