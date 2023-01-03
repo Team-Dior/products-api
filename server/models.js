@@ -66,48 +66,14 @@ module.exports = {
       })
   },
   queryRelated: (product_id) => {
-
+    return db.query(`SELECT related_product_id FROM related WHERE current_product_id = ${product_id}`)
+      .then((result) => {
+        return data = result.rows.map((row) => {
+          return row.related_product_id;
+        })
+      })
+      .then((data) => {
+        return [...new Set(data)];
+      })
   },
 }
-
-
-
-// queryStyles: (product_id) => {
-//   let data = { product_id };
-//   return db.query(`SELECT id AS style_id, name, original_price, sale_price, default_style FROM styles WHERE productID = ${product_id}`)
-//     .then((result) => {
-//       data.results = result.rows;
-//       console.log(data);
-//       let photos = [];
-//       let skus = [];
-
-//       for (let index = 0; index < data.results.length; index++) {
-//         console.log('hey');
-//         console.log(`SELECT url, thumbnail_url from photos WHERE styleid = ${data.results[index].style_id}`)
-//         return db.query(`SELECT url, thumbnail_url from photos WHERE styleid = ${data.results[index].style_id}`)
-//           .then((result) => {
-//             console.log('not error');
-//             console.log(result.rows);
-//             photos.push(result.rows);
-//           })
-//           .catch((error) => {
-//             console.log('error');
-//             console.log(error);
-//           })
-//         return db.query(`SELECT id, size, quantity FROM sku WHERE styleiid = ${data.results[i].style_id}`)
-//           .then((result) => {
-//             skus.push(result.rows);
-//           })
-//           .catch((error) => {
-//             console.log(error);
-//           })
-//       }
-//       console.log(photos);
-//       console.log(skus);
-//       setTimeout(10000);
-//       return data;
-//     })
-//     .catch((error) => {
-//       return error;
-//     })
-// }
