@@ -4,8 +4,6 @@ CREATE DATABASE products;
 
 USE products;
 
--- \c products
-
 CREATE TABLE IF NOT EXISTS products (
   id SERIAL PRIMARY KEY,
   name Text,
@@ -80,3 +78,10 @@ COPY related
 FROM '/Users/max/HackReactor/SEI/week8/products-api/data/related.csv'
 DELIMITER ','
 CSV HEADER;
+
+CREATE INDEX product_index ON products(id);
+CREATE INDEX feature_index ON features(product_id);
+CREATE INDEX style_index ON styles(productId);
+CREATE INDEX photo_index ON photos(styleId);
+CREATE INDEX sku_index ON skus(styleId);
+CREATE INDEX related_index ON related(current_product_id);
