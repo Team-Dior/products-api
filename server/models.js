@@ -37,9 +37,12 @@ module.exports = {
             await db.query(`SELECT url, thumbnail_url from photos WHERE styleid = ${style.style_id}`)
             .then((result) => {
               style.photos = result.rows;
+              if (style.sale_price = 'null') {
+                style.sale_price = '0';
+              }
             })
             .catch((error) => {
-              console.log(error);
+              return error;
             })
           })
         ).then(() => {
@@ -54,10 +57,16 @@ module.exports = {
                 }, {})
                 : { null: { quantity: null, size: null } }
               })
+              .catch((error) => {
+                return error;
+              })
             })
           )
           .then(() => {
             return data;
+          })
+          .catch((error) => {
+            return error;
           })
         })
       })
@@ -73,7 +82,10 @@ module.exports = {
         })
       })
       .then((data) => {
-        return [...new Set(data)];
+        return  [...new Set(data)];
+      })
+      .catch((error) => {
+        return error;
       })
   },
 }
