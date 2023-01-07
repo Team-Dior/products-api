@@ -8,7 +8,7 @@ const cors = require('cors');
 const app = express();
 const router = require('./router');
 
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());

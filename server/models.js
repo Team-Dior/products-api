@@ -1,7 +1,5 @@
 const db = require('../database/db.js')
 
-
-
 module.exports = {
   queryProducts: (page, count) => {
     return db.query(`SELECT * FROM products WHERE id > ${(page - 1) * count} AND id < ${(page * count) + 1}`)
