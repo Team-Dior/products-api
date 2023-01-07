@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const controllers = require('./controllers.js');
 
-router.get('loaderio-59ef9a8c53445f9dbf70819ed463be6c', (req, res) => {
+router.get('loaderio-59ef9a8c53445f9dbf70819ed463be6c/', (req, res) => {
   res.status(200).send('loaderio-59ef9a8c53445f9dbf70819ed463be6c');
 })
 
